@@ -1,0 +1,98 @@
+{
+	"name": "RDFIO",
+	"version": "v3.0.2",
+	"author": [
+		"[http://bionics.it Samuel Lampa]",
+		"[http://koshatnik.com Ali King]"
+	],
+	"url": "https://www.mediawiki.org/wiki/Extension:RDFIO",
+	"descriptionmsg": "rdfio-desc",
+	"license-name": "GPL-2.0",
+	"type": "other",
+	"requires": {
+		"MediaWiki": ">= 1.29.0"
+	},
+	"AvailableRights": [
+		"rdfio-admin",
+		"rdfio-import",
+		"rdfio-sparql"
+	],
+	"GroupPermissions": {
+		"sysop": {
+			"rdfio-admin": true,
+			"rdfio-import": true,
+			"rdfio-sparql": true
+		},
+		"smwadministrator": {
+			"rdfio-admin": true,
+			"rdfio-import": true,
+			"rdfio-sparql": true
+		},
+		"rdfioadministrator": {
+			"rdfio-admin": true,
+			"rdfio-import": true,
+			"rdfio-sparql": true
+		},
+		"smwcurator": {
+			"rdfio-import": true,
+			"rdfio-sparql": true
+		},
+		"rdfiocurator": {
+			"rdfio-import": true,
+			"rdfio-sparql": true
+		}
+	},
+	"config": {
+		"RDFIOAutoload": {
+			"description": "Automatically set SMW store as SMWARC2Store",
+			"value": true,
+			"public": true
+		}
+	},
+	"SpecialPages": {
+		"RDFIOAdmin": "RDFIOAdmin",
+		"RDFImport": "RDFImport",
+		"SPARQLEndpoint": "SPARQLEndpoint",
+		"SPARQLImport": "SPARQLImport"
+	},
+	"MessagesDirs": {
+		"RDFIO": [
+			"i18n"
+		]
+	},
+	"ExtensionMessagesFiles": {
+		"RDFIOAliases": "RDFIO.alias.php"
+	},
+	"AutoloadClasses": {
+		"ARC2_SPARQLSerializerPlugin": "vendor/ARC2_SPARQLSerializerPlugin.php",
+		"RDFIOARC2StoreException": "stores/SMW_ARC2Store.php",
+		"RDFIOARC2StoreWrapper": "classes/RDFIO_ARC2StoreWrapper.php",
+		"RDFIOSMWPageWriter": "classes/RDFIO_SMWPageWriter.php",
+		"RDFIOTestCase": "tests/phpunit/RDFIOTestCase.php",
+		"RDFIOWikiWriter": "classes/RDFIO_WikiWriter.php",
+		"RDFIOARC2ToWikiConverter": "classes/parsers/RDFIO_ARC2ToWikiConverter.php",
+		"RDFIOException": "classes/RDFIO_Exception.php",
+		"RDFIOParser": "classes/parsers/RDFIO_Parser.php",
+		"RDFIORDFImporter": "classes/RDFIO_RDFImporter.php",
+		"RDFIORDFXMLToARC2Parser": "classes/parsers/RDFIO_RDFXMLToARC2Parser.php",
+		"RDFIOTurtleToARC2Parser": "classes/parsers/RDFIO_TurtleToARC2Parser.php",
+		"RDFIOURIToWikiTitleConverter": "classes/parsers/RDFIO_URIToWikiTitleConverter.php",
+		"RDFIOWikiPage": "classes/RDFIO_WikiPage.php",
+		"RDFIOSpecialPage": "classes/RDFIO_SpecialPage.php",
+		"RDFIOAdmin": "specials/SpecialRDFIOAdmin.php",
+		"RDFIOHooks": "RDFIO.hooks.php",
+		"RDFIO": "includes/RDFIO.php",
+		"RDFImport": "specials/SpecialRDFImport.php",
+		"RDFIO_CreatePagesOnInstall": "classes/RDFIO_CreatePagesOnInstall.php",
+		"SMWARC2Store": "stores/SMW_ARC2Store.php",
+		"SPARQLEndpoint": "specials/SpecialSPARQLEndpoint.php",
+		"SPARQLImport": "specials/SpecialSPARQLImport.php"
+	},
+	"Hooks": {
+		"UnitTestsList": "RDFIOHooks::onUnitTestsList",
+		"loadExtensionSchemaUpdate": "RDFIOCreatePagesOnInstall::create"
+	},
+	"callback": "RDFIO::initExtension",
+	"load_composer_autoloader": true,
+	"manifest_version": 2
+}
