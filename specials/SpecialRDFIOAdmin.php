@@ -34,7 +34,7 @@ class RDFIOAdmin extends RDFIOSpecialPage {
 
 		$rdfiogAction = $wRequest->getText( 'rdfio-action', '' );
 
-		$this->addHTML('<h3>' . wfMessage( 'rdfio-triplestore-setup' )->parse() . '</h3>' );
+		$this->addHTML('<h3>' . $this->msg( 'rdfio-triplestore-setup' )->parse() . '</h3>' );
 
 		$arc2StoreConfig = array(
 			'db_host' => $wgDBserver,
@@ -47,7 +47,7 @@ class RDFIOAdmin extends RDFIOSpecialPage {
 		$store->createDBCon();
 
 		if ( $store->isSetUp() ) {
-			$this->infoMsg( wfMessage( 'rdfio-triplestore-is-already-setup' )->parse() );
+			$this->infoMsg( $this->msg( 'rdfio-triplestore-is-already-setup' )->parse() );
 		} else {
 			if ( $rdfiogAction === 'setup' ) {
 				$this->setUpStore( $store, $wUser, $wRequest );
@@ -60,7 +60,7 @@ class RDFIOAdmin extends RDFIOSpecialPage {
 					<input
 						type="submit"
 						name="submit-button"
-						value="' . wfMessage( 'rdfio-set-up-triplestore' )->parse() . '">' .
+						value="' . $this->msg( 'rdfio-set-up-triplestore' )->parse() . '">' .
 					Html::Hidden(  'rdfio-action', 'setup' ) .
 					Html::Hidden( 'token', $wUser->getEditToken() ) .
 				'</form>';
@@ -68,7 +68,7 @@ class RDFIOAdmin extends RDFIOSpecialPage {
 			}
 		}
 
-		$this->addWikiText( "\n===" . wfMessage( 'rdfio-data-sources' )->parse() . "===\n" );
+		$this->addWikiText( "\n===" . $this->msg( 'rdfio-data-sources' )->parse() . "===\n" );
 		$this->addWikiText( "\n{{#ask: [[Category:RDFIO Data Source]]
 					|?Equivalent URI
 					|?RDFIO Import Type
@@ -77,13 +77,13 @@ class RDFIOAdmin extends RDFIOSpecialPage {
 					|limit=10
 					}}\n" );
 
-		$this->addWikiText( "\n===" . wfMessage( 'rdfio-pages-and-templates' )->parse() . "===\n" );
-		$this->addHTML( wfMessage( 'rdfio-associate-template-with-category-howto' )->parse() );
+		$this->addWikiText( "\n===" . $this->msg( 'rdfio-pages-and-templates' )->parse() . "===\n" );
+		$this->addHTML( $this->msg( 'rdfio-associate-template-with-category-howto' )->parse() );
 		$this->addWikiText( "{{#ask:  [[:Category:+]]
 					|?Equivalent URI
 					|?Has template
 					|format=table
-					|mainlabel=" . wfMessage( 'rdfio-category' )->parse() . "
+					|mainlabel=" . $this->msg( 'rdfio-category' )->parse() . "
 					|limit=10
 					}}" );
 	}
@@ -118,27 +118,27 @@ class RDFIOAdmin extends RDFIOSpecialPage {
 	 */
 	private function setUpStore( $store, $wUser, $wRequest ) {
 		if ( !$this->editTokenOk( $wUser, $wRequest ) ) {
-			$this->errorMsg( wfMessage( 'rdfio-csrf-detected' )->parse() );
+			$this->errorMsg( $this->msg( 'rdfio-csrf-detected' )->parse() );
 			return;
 		}
 
 		if ( !in_array( 'sysop', $wUser->getGroups() ) ) {
-			$this->errorMsg( wfMessage( 'rdfio-permission-error-only-sysops' )->parse() );
+			$this->errorMsg( $this->msg( 'rdfio-permission-error-only-sysops' )->parse() );
 			return;
 		}
 
 		$store->setUp();
 
 		if ( $store->getErrors() ) {
-			$this->errorMsg( wfMessage( 'rdfio-error-setting-up-store' )->parse() . ': ' . implode( "\n", $store->getErrors() ));
+			$this->errorMsg( $this->msg( 'rdfio-error-setting-up-store' )->parse() . ': ' . implode( "\n", $store->getErrors() ));
 			return;
 		}
 
 		if ( !$store->isSetUp() ) {
-			$this->errorMsg( wfMessage( 'rdfio-error-setting-up-store' )->parse() . '. ' . wfMessage( 'rdfio-error-reason-unknown-no-errors-reported' )->parse() );
+			$this->errorMsg( $this->msg( 'rdfio-error-setting-up-store' )->parse() . '. ' . $this->msg( 'rdfio-error-reason-unknown-no-errors-reported' )->parse() );
 			return;
 		}
 
-		$this->successMsg( wfMessage( 'rdfio-triplestore-successfully-set-up' )->parse() );
+		$this->successMsg( $this->msg( 'rdfio-triplestore-successfully-set-up' )->parse() );
 	}
 }

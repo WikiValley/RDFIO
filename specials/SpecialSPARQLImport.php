@@ -25,7 +25,7 @@ class SPARQLImport extends RDFIOSpecialPage {
 		$wUser = $this->getUser();
 
 		$this->setHeaders();
-		$submitButtonText = wfMessage( 'rdfio-start-import' )->parse();
+		$submitButtonText = $this->msg( 'rdfio-start-import' )->parse();
 
 		$offset = $wRequest->getVal( 'offset', 0 );
 		$limit = $wRequest->getVal( 'limit', 25 );
@@ -33,11 +33,11 @@ class SPARQLImport extends RDFIOSpecialPage {
 		if ( $wRequest->getText( 'action' ) === 'import' ) {
 
 			if ( !$this->allowInsert( $wUser, $wRequest ) ) {
-				$this->errorMsg( wfMessage( 'rdfio-error-no-write-access' )->parse() );
+				$this->errorMsg( $this->msg( 'rdfio-error-no-write-access' )->parse() );
 				return;
 			}
 
-			$submitButtonText = wfMessage( 'rdfio-import-next-batch-of-triples' )->parse();
+			$submitButtonText = $this->msg( 'rdfio-import-next-batch-of-triples' )->parse();
 			$this->addHTML( $this->getHTMLForm( $submitButtonText, $limit, $offset + $limit ) );
 
 			try {
@@ -95,11 +95,11 @@ class SPARQLImport extends RDFIOSpecialPage {
 		$externalSparqlUrl = $wRequest->getText( 'extsparqlurl' );
 
 		if ( $externalSparqlUrl === '' ) {
-			throw new RDFIOException( wfMessage( 'rdfio-error-empty-sparql-url' )->parse() );
+			throw new RDFIOException( $this->msg( 'rdfio-error-empty-sparql-url' )->parse() );
 		}
 
 		if ( substr( $externalSparqlUrl, 0, 4 ) !== 'http' ) {
-			throw new RDFIOException( wfMessage( 'rdfio-error-invalid-sparql-url' )->parse() );
+			throw new RDFIOException( $this->msg( 'rdfio-error-invalid-sparql-url' )->parse() );
 		}
 
 		$sparqlQuery = urlencode( "SELECT DISTINCT * WHERE { ?s ?p ?o } OFFSET $offset LIMIT $limit" );
@@ -111,7 +111,7 @@ class SPARQLImport extends RDFIOSpecialPage {
 		$triples = array();
 
 		if ( !is_object( $sparqlResultXmlObj ) ) {
-			$this->errorMsg( wfMessage( 'rdfio-error-not-sparql-endpoint' )->parse() );
+			$this->errorMsg( $this->msg( 'rdfio-error-not-sparql-endpoint' )->parse() );
 			return;
 		}
 
@@ -161,26 +161,26 @@ class SPARQLImport extends RDFIOSpecialPage {
 
 		$htmlForm = '
 		<form method="post" action="" style="clear: none;">
-				' . wfMessage( 'rdfio-remote-sparql-endpoint-url' )->parse() . ':<br>
+				' . $this->msg( 'rdfio-remote-sparql-endpoint-url' )->parse() . ':<br>
 				<input type="hidden" name="action" value="import">
 				<div id="urlfields">
 				<input type="text" name="extsparqlurl" id="extsparqlurl" size="60" value="' . $extSparqlUrl . '"></input>
-				<a href="#" onClick="addSources();">' . wfMessage( 'rdfio-use-previous-source' )->parse() . '</a>
+				<a href="#" onClick="addSources();">' . $this->msg( 'rdfio-use-previous-source' )->parse() . '</a>
 				</div>
-				<p><span style="font-style: italic; font-size: 11px">' . wfMessage( 'rdfio-example' )->parse() . ': http://www.semantic-systems-biology.org/biogateway/endpoint</span></p>
-				<p>' . wfMessage( 'rdfio-batching-parameters-instructions' )->parse() . ':</p>
+				<p><span style="font-style: italic; font-size: 11px">' . $this->msg( 'rdfio-example' )->parse() . ': http://www.semantic-systems-biology.org/biogateway/endpoint</span></p>
+				<p>' . $this->msg( 'rdfio-batching-parameters-instructions' )->parse() . ':</p>
 				<table style="margin-bottom: 1em;">
 					<tr>
-						<th style="text-align: right;">' . wfMessage( 'rdfio-limit' )->parse() . ':</th>
+						<th style="text-align: right;">' . $this->msg( 'rdfio-limit' )->parse() . ':</th>
 						<td><input type="text" name="limit" size="3" value="' . $limit . '"></td>
 					</tr>
 					<tr>
-						<th style="text-align: right;">' . wfMessage( 'rdfio-offset' )->parse() . ':</th>
+						<th style="text-align: right;">' . $this->msg( 'rdfio-offset' )->parse() . ':</th>
 						<td><input type="text" name="offset" size="3" value="' . $offset . '"></td>
 					</tr>
 				</table>
 				<input type="hidden" name="token" value="' . $wUser->getEditToken() . '">
-				<input type="submit" value="' . $buttonText . '"> <a href="' . $thisPageUrl . '">' . wfMessage( 'rdfio-clear-form' ) . '</a></form>';
+				<input type="submit" value="' . $buttonText . '"> <a href="' . $thisPageUrl . '">' . $this->msg( 'rdfio-clear-form' ) . '</a></form>';
 		$htmlForm .= $this->getJs();
 		return $htmlForm;
 	}
