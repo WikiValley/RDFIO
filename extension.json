@@ -85,6 +85,8 @@
 		"RDFImport": "specials/SpecialRDFImport.php",
 		"RDFIO_CreatePagesOnInstall": "classes/RDFIO_CreatePagesOnInstall.php",
 		"SMWARC2Store": "stores/SMW_ARC2Store.php",
+		"ARC2_StoreMW": "classes/ARC2/ARC2_StoreMW.php",
+		"ARC2\\Store\\Adapter\\MediaWikiDatabaseAdapter": "classes/ARC2/MediaWikiDatabaseAdapter.php",
 		"SPARQLEndpoint": "specials/SpecialSPARQLEndpoint.php",
 		"SPARQLImport": "specials/SpecialSPARQLImport.php"
 	},
