@@ -370,7 +370,7 @@ class SPARQLEndpoint extends RDFIOSpecialPage {
 	 * @return string $rdfxml
 	 */
 	private function triplesToRDFXML( $triples ) {
-		$ser = new ARC2_RDFXMLSerializer();
+		$ser = new ARC2_RDFXMLSerializer( $this->getSPARQLEndpointConfig(), $this );
 		// Serialize into RDF/XML, since it will contain
 		// all URIs in un-abbreviated form, so that they
 		// can easily be replaced by search-and-replace
@@ -387,13 +387,14 @@ class SPARQLEndpoint extends RDFIOSpecialPage {
 	 * SPARQL endpoint
 	 */
 	private function getSPARQLEndpointConfig() {
-		global $wgDBserver, $wgDBname, $wgDBuser, $wgDBpassword, $wgDBprefix;
+		global $wgDBprefix;
 		$epconfig = array(
-			'db_host' => $wgDBserver,
-			'db_name' => $wgDBname,
-			'db_user' => $wgDBuser,
-			'db_pwd' => $wgDBpassword,
+			'db_adapter' => 'MediaWiki',
+			'mediawiki_db_con' => \MediaWiki\MediaWikiServices::getInstance()
+				->getDBLoadBalancer()
+				->getMaintenanceConnectionRef( DB_PRIMARY ),
 			'store_name' => $wgDBprefix . 'arc2store', // Determines table prefix
+			'store_log_inserts' => true,
 		);
 		$epconfig['endpoint_features'] =
 			array(

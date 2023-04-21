@@ -19,13 +19,14 @@ class SetupArc2Store extends Maintenance {
 	}
 
 	public function execute() {
-		global $wgDBserver, $wgDBname, $wgDBuser, $wgDBpassword, $wgDBprefix;
+		global $wgDBprefix;
 		$arc2StoreConfig = array(
-			'db_host' => $wgDBserver,
-			'db_name' => $wgDBname,
-			'db_user' => $wgDBuser,
-			'db_pwd' => $wgDBpassword,
+			'db_adapter' => 'MediaWiki',
+			'mediawiki_db_con' => \MediaWiki\MediaWikiServices::getInstance()
+				->getDBLoadBalancer()
+				->getMaintenanceConnectionRef( DB_PRIMARY ),
 			'store_name' => $wgDBprefix . 'arc2store', // Determines table prefix
+			'store_log_inserts' => true,
 		);
 		$store = ARC2::getStore( $arc2StoreConfig );
 		$store->createDBCon();
