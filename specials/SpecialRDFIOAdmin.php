@@ -24,7 +24,7 @@ class RDFIOAdmin extends RDFIOSpecialPage {
 			throw new PermissionsError( 'rdfio-admin', array( 'rdfio-specialpage-access-permission-missing' ) );
 		}
 
-		global $wgDBserver, $wgDBname, $wgDBuser, $wgDBpassword, $wgDBprefix;
+		global $wgDBprefix;
 
 		$wUser = $this->getUser();
 		$wRequest = $this->getRequest();
@@ -37,10 +37,10 @@ class RDFIOAdmin extends RDFIOSpecialPage {
 		$this->addHTML('<h3>' . $this->msg( 'rdfio-triplestore-setup' )->parse() . '</h3>' );
 
 		$arc2StoreConfig = array(
-			'db_host' => $wgDBserver,
-			'db_name' => $wgDBname,
-			'db_user' => $wgDBuser,
-			'db_pwd' => $wgDBpassword,
+			'db_adapter' => 'MediaWiki',
+			'mediawiki_db_con' => \MediaWiki\MediaWikiServices::getInstance()
+				->getDBLoadBalancer()
+				->getMaintenanceConnectionRef( DB_PRIMARY ),
 			'store_name' => $wgDBprefix . 'arc2store', // Determines table prefix
 		);
 		$store = ARC2::getStore( $arc2StoreConfig );
