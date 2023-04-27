@@ -27,6 +27,7 @@ class RDFIOARC2StoreWrapper {
 				->getDBLoadBalancer()
 				->getMaintenanceConnectionRef( DB_PRIMARY ),
 			'store_name' => preg_replace( '/s?unittest_/', '', $wgDBprefix ) . 'arc2store', // Determines table prefix
+			'store_write_buffer' => 1,
 		);
 		$this->arc2store = ARC2::getStore( $arc2StoreConfig );
 		$this->arc2store->createDBCon();

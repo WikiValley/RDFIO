@@ -13,6 +13,7 @@ class ARC2_StoreMW extends ARC2_Store {
 		}
 		$this->a['db_con'] = null;
 		$this->a['db_object'] = $this->db;
+		$this->a['store_write_buffer'] = 1;
 
 		return true;
 	}

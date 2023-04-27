@@ -395,6 +395,7 @@ class SPARQLEndpoint extends RDFIOSpecialPage {
 				->getMaintenanceConnectionRef( DB_PRIMARY ),
 			'store_name' => $wgDBprefix . 'arc2store', // Determines table prefix
 			'store_log_inserts' => true,
+			'store_write_buffer' => 1,
 		);
 		$epconfig['endpoint_features'] =
 			array(

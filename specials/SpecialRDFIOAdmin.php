@@ -42,6 +42,7 @@ class RDFIOAdmin extends RDFIOSpecialPage {
 				->getDBLoadBalancer()
 				->getMaintenanceConnectionRef( DB_PRIMARY ),
 			'store_name' => $wgDBprefix . 'arc2store', // Determines table prefix
+			'store_write_buffer' => 1,
 		);
 		$store = ARC2::getStore( $arc2StoreConfig );
 		$store->createDBCon();

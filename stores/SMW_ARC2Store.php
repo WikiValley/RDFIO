@@ -30,6 +30,7 @@ class SMWARC2Store extends SMWSQLStore3 {
 				->getMaintenanceConnectionRef( DB_PRIMARY ),
 			'store_name' => $wgDBprefix . 'arc2store', // Determines table prefix
 			'store_log_inserts' => true,
+			'store_write_buffer' => 1,
 		);
 		$this->arc2store = ARC2::getStore( $arc2StoreConfig );
 		$this->arc2store->createDBCon();
