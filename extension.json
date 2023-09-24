@@ -92,7 +92,7 @@
 	},
 	"Hooks": {
 		"UnitTestsList": "RDFIOHooks::onUnitTestsList",
-		"loadExtensionSchemaUpdate": "RDFIOCreatePagesOnInstall::create"
+		"LoadExtensionSchemaUpdates": "RDFIOCreatePagesOnInstall::create"
 	},
 	"callback": "RDFIO::initExtension",
 	"load_composer_autoloader": true,
